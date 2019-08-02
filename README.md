@@ -61,7 +61,7 @@ gbrForestDBWriter.py cmdline options:
   * name of the output database file. A ".db" is added to it and the file is appended not overwritten
 
 Note to save time, several simple scripts were written to automate this for the UL production, they were
-* makeSCRegDB.py
+* [makeSCRegDB.py](test/makeSCRegDB.py)
 * makeEleRegDB.py
 * makePhoRegDB.py
 
