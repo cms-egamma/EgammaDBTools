@@ -50,13 +50,17 @@ This reads in from *input.root* a GBRForestD with name *EBCorrection* and writes
 
 gbrForestDBWriter.py cmdline options:
 * gbrFilename : 
-  .root file with the GBRForestD object you want to upload
-* fileLabel: name of the GBRForestD in the .root file
-* dbLabel: label for the database (note, its not clear to me that this actually gets used for anything at this stage as its reset when queuing for the global tag but fine we do it anyways)
-* dbTag: name of the tag for the database
-* dbFilename: name of the output database file. A ".db" is added to it and the file is appended not overwritten
+  * .root file with the GBRForestD object you want to upload
+* fileLabel:
+  *  name of the GBRForestD in the .root file
+* dbLabel:
+  * label for the database (note, its not clear to me that this actually gets used for anything at this stage as its reset when queuing for the global tag but fine we do it anyways)
+* dbTag:
+  * name of the tag for the database
+* dbFilename:
+  * name of the output database file. A ".db" is added to it and the file is appended not overwritten
 
-Note to save time, several simple scripts were written to automate this fort the UL production, they were
+Note to save time, several simple scripts were written to automate this for the UL production, they were
 * makeSCRegDB.py
 * makeEleRegDB.py
 * makePhoRegDB.py
