@@ -40,7 +40,7 @@ The steps are as follows:
 
 ### conversion from root to db format
 
-This is done by [RecoEgamma/EgammaDBTools/gbrForestDBWriter.py](https://github.com/cms-egamma/EgammaDBTools/blob/master/test/gbrForestDBWriter.py). This calls the [GBRForestDBWriter](https://github.com/cms-egamma/EgammaDBTools/blob/master/plugins/GBRForestDBWriter.cc) plugin to do the work via cmsRun. Example command:
+This is done by [RecoEgamma/EgammaDBTools/gbrForestDBWriter.py](test/gbrForestDBWriter.py). This calls the [GBRForestDBWriter](plugins/GBRForestDBWriter.cc) plugin to do the work via cmsRun. Example command:
 
 ```
 cmsRun RecoEgamma/EgammaDBTools/gbrForestDBWriter.py gbrFilename=input.root fileLabel=EBCorrection dbTag=electron_eb_ecalOnly_1To300_0p2To2_mean_2018ULV1 dbLabel=electron_eb_ecalOnly_1To300_0p2To2_mean dbFilename=output
@@ -62,8 +62,8 @@ gbrForestDBWriter.py cmdline options:
 
 Note to save time, several simple scripts were written to automate this for the UL production, they were
 * [makeSCRegDB.py](test/makeSCRegDB.py)
-* makeEleRegDB.py
-* makePhoRegDB.py
+* [makeEleRegDB.py](test/makeEleRegDB.py)
+* [makePhoRegDB.py](test/makePhoRegDB.py)
 
 Note as written makePhoRegDB.py appends to the file makeEleRegDB.py wrote just to keep them in the same file.  
 
@@ -71,9 +71,9 @@ Note as written makePhoRegDB.py appends to the file makeEleRegDB.py wrote just t
 
 First, note to do this you must be a member of cms-cond-dropbox e-group. Subscript in the normal way for e-groups. 
 
-The local .db file must now be uploaded to the database. The AlCa tool is the ConditionUpload service https://twiki.cern.ch/twiki/bin/view/CMS/ConditionUploader via  the script "uploadConditions.py" which is part of the release. 
+The local .db file must now be uploaded to the database. The AlCa tool is the [ConditionUpload service](https://twiki.cern.ch/twiki/bin/view/CMS/ConditionUploader) via  the script "uploadConditions.py" which is part of the normal CMSSW release release. 
 
-To automate this tedious procedure, we use the "egRegUpload.py" script which simply uploads all the tags in a given .db file to either the prep (default) or production database. 
+To automate this tedious procedure, we use the [egRegUpload.py](test/egRegUpload.py) script which simply uploads all the tags in a given .db file to either the prep (default) or production database. 
 
 ```
 python RecoEgamma/EgammaDBTools/test/egRegUpload.py filename.db -txt "upload message"
@@ -96,7 +96,7 @@ It will require you to type your cern username and password halfway through the 
 
 For the data we need to create a single tag with all three years (or how many are availible) with the appropriate interval of validity which can then be included in the data global tag so a single tag can be used for all three years. 
 
-This is done via the "makeMultiEraULRegTag.py" script which reads the specified tag from the databases, makes a new tag with the appropriate IOVs and then uploads. It is hardcoded to do the UL style regressions combinations for the three years and should be modified as appropriate. 
+This is done via the [makeMultiEraULRegTag.py](test/makeMultiEraULRegTag.py) script which reads the specified tag from the databases, makes a new tag with the appropriate IOVs and then uploads. It is hardcoded to do the UL style regressions combinations for the three years and should be modified as appropriate. 
 
 ```
 python RecoEgamma/EgammaDBTools/test/makeMultiEraULRegTag.py regCombTmp/regCombTmp --txt "upload message
