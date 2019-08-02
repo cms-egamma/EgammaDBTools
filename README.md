@@ -40,10 +40,10 @@ The steps are as follows:
 
 ### conversion from root to db format
 
-This is done by [RecoEgamma/EgammaDBTools/gbrForestDBWriter.py](test/gbrForestDBWriter.py). This calls the [GBRForestDBWriter](plugins/GBRForestDBWriter.cc) plugin to do the work via cmsRun. Example command:
+This is done by [gbrForestDBWriter.py](test/gbrForestDBWriter.py). This calls the [GBRForestDBWriter](plugins/GBRForestDBWriter.cc) plugin to do the work via cmsRun. Example command:
 
 ```
-cmsRun RecoEgamma/EgammaDBTools/gbrForestDBWriter.py gbrFilename=input.root fileLabel=EBCorrection dbTag=electron_eb_ecalOnly_1To300_0p2To2_mean_2018ULV1 dbLabel=electron_eb_ecalOnly_1To300_0p2To2_mean dbFilename=output
+cmsRun RecoEgamma/EgammaDBTools/test/gbrForestDBWriter.py gbrFilename=input.root fileLabel=EBCorrection dbTag=electron_eb_ecalOnly_1To300_0p2To2_mean_2018ULV1 dbLabel=electron_eb_ecalOnly_1To300_0p2To2_mean dbFilename=output
 ```
 
 This reads in from *input.root* a GBRForestD with name *EBCorrection* and writes it to a file *output.db* (it automatically adds .db) with label *electron_eb_ecalOnly_1To300_0p2To2_mean* and tagname *electron_eb_ecalOnly_1To300_0p2To2_mean_2018ULV1*. Note, it will append to, not overwrite the output file *output.db*.
