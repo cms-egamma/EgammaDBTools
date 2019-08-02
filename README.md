@@ -99,7 +99,7 @@ For the data we need to create a single tag with all three years (or how many ar
 This is done via the [makeMultiEraULRegTag.py](test/makeMultiEraULRegTag.py) script which reads the specified tag from the databases, makes a new tag with the appropriate IOVs and then uploads. It is hardcoded to do the UL style regressions combinations for the three years and should be modified as appropriate. 
 
 ```
-python RecoEgamma/EgammaDBTools/test/makeMultiEraULRegTag.py regCombTmp/regCombTmp --txt "upload message
+python RecoEgamma/EgammaDBTools/test/makeMultiEraULRegTag.py regCombTmp/regCombTmp --txt "upload message"
 ```
 with the "--prod" string indicating to upload to production.  It also makes a bunch of temporary files for uploading so the first argument is the best name of that which is then added to. Note: it will delete all files starting with that pattern! It also assumes the directory exists, otherwise it will fail. 
 
