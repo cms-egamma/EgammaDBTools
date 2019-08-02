@@ -17,21 +17,22 @@ scram b -j 16
 
 ## AlCa Terminology
 
-*payload*: an object in the database containing conditions, eg in our case GBRForestD
-*IOV*: interval validity; a time period, usually run range, for which a payload is valid. This enables different payloads to be used for different data periods, in our case, it allows the 2017UL conditions to be used for 2017 data and 2018YL conditions to be used for 2018 data. Note, currently this is only used for data, MC is all at the same time (run number = 1). 
-*tag*: an identifier corrresponding to a payload or group of payloads with their IOVs. Not seen by CMSSW code. So if we have 2017UL, 2018UL conditions, we will have a tag <basename>_2017UL and <basename>_2018UL and include the appropriate one.  
-*label*: Allows to distingush between multiple tags all providing a payload of the same type. E/gamma's type is mostly GBRForestD so each one must be labelled apporately to identify it. The CMSSW code then knows to ask for GBRForestD with label X for regression X.  
-*global tag*: a collection of tags defining the conditions appropriate to the given workflow 
+It is worth reading the [AlCa tutorials](https://indico.cern.ch/event/828624/) and that remains the reference. Below is a summary relavent to e/gamma.
+
+* **payload**: an object in the database containing conditions, eg in our case GBRForestD
+* **IOV**: interval validity; a time period, usually run range, for which a payload is valid. This enables different payloads to be used for different data periods, in our case, it allows the 2017UL conditions to be used for 2017 data and 2018YL conditions to be used for 2018 data. Note, currently this is only used for data, MC is all at the same time (run number = 1). 
+* **tag**: an identifier corrresponding to a payload or group of payloads with their IOVs. Not seen by CMSSW code. So if we have 2017UL, 2018UL conditions, we will have a tag <basename>_2017UL and <basename>_2018UL and include the appropriate one.  
+* **label**: Allows to distingush between multiple tags all providing a payload of the same type. E/gamma's type is mostly GBRForestD so each one must be labelled apporately to identify it. The CMSSW code then knows to ask for GBRForestD with label X for regression X.  
+* **global tag**: a collection of tags defining the conditions appropriate to the given workflow 
 
 Our goal is to provide a list of conditions appropriate for the running conditions. Taking the Ultra Legacy (UL) as an example, we need to provide payloads appropriate to each year; 2016, 2017 , 2018. This means for MC we make a tag corresponding to each payload for a given year for inclusion in the MC year specific global tag, eg 106X_upgrade2018_realistic_vX, 106X_mc2017_realistic_vX. This is because MC is currently not time / run dependent. For data, using IOVs, we combine the three years into a single tag corresponding to the 3 payloads. This allows a single global tag to be used for the data. 
 
-It is also worth reading the AlCa tutorial at https://indico.cern.ch/event/828624/
 
 ## Example Workflow
 
 At this point it is assumed that you have created GBRForestD objects and have them in various root files you wish to then upload to the database. 
 
-There are three steps
+The steps are as follows:
 1. read the GBRForests from the .root files and write it to a local database file with a given tag 
 2. upload those tags in the local database file to the central database
 3. if needed, combine those tags to create a single tag for data which uses run number to determine which GBRForest to read
@@ -39,16 +40,17 @@ There are three steps
 
 ### conversion from root to db format
 
-This is done by RecoEgamma/EgammaDBTools/gbrForestDBWriter.py. This calls the GBRForestDBWriter as part of a normal cmsRun job. 
+This is done by [RecoEgamma/EgammaDBTools/gbrForestDBWriter.py](https://github.com/cms-egamma/EgammaDBTools/blob/master/test/gbrForestDBWriter.py). This calls the [GBRForestDBWriter](https://github.com/cms-egamma/EgammaDBTools/blob/master/plugins/GBRForestDBWriter.cc) plugin to do the work via cmsRun. Example command:
 
 ```
 cmsRun RecoEgamma/EgammaDBTools/gbrForestDBWriter.py gbrFilename=input.root fileLabel=EBCorrection dbTag=electron_eb_ecalOnly_1To300_0p2To2_mean_2018ULV1 dbLabel=electron_eb_ecalOnly_1To300_0p2To2_mean dbFilename=output
 ```
 
-This reads in from "input.root" a GBRForestD with name "EBCorrection" and writes it to a file "output.db" (it automatically adds .db) with label "electron_eb_ecalOnly_1To300_0p2To2_mean" and tagname "electron_eb_ecalOnly_1To300_0p2To2_mean_2018ULV1". Note, it will append to, not overwrite "output.db".
+This reads in from *input.root* a GBRForestD with name *EBCorrection* and writes it to a file *output.db* (it automatically adds .db) with label *electron_eb_ecalOnly_1To300_0p2To2_mean* and tagname *electron_eb_ecalOnly_1To300_0p2To2_mean_2018ULV1*. Note, it will append to, not overwrite the output file *output.db*.
 
-options:
-* gbrFilename : .root file with the GBRForestD object you want to upload
+gbrForestDBWriter.py cmdline options:
+* gbrFilename : 
+  .root file with the GBRForestD object you want to upload
 * fileLabel: name of the GBRForestD in the .root file
 * dbLabel: label for the database (note, its not clear to me that this actually gets used for anything at this stage as its reset when queuing for the global tag but fine we do it anyways)
 * dbTag: name of the tag for the database
